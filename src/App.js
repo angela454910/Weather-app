@@ -1,10 +1,10 @@
 import React from "react";
 import "./App.css";
-import Header from "./Header";
-import Nav from "./Nav";
-import Condition from "./Condition";
-import Forecast from "./Forecast";
-import Footer from "./Footer";
+import Header from "./Components/Header";
+import Nav from "./Components/Nav";
+import Condition from "./Components/Condition";
+import Forecast from "./Components/Forecast";
+import Footer from "./Components/Footer";
 
 function App() {
   return (
