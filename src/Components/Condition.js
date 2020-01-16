@@ -7,20 +7,23 @@ class Condition extends React.Component {
   render() {
     return (
       <section className="weather-condition">
-        <div className="weather-condition__location">Brisbane</div>
+        <div className="weather-condition__location">{this.props.cityName}</div>
         <div className="weather-condition__clear">Clear</div>
-        <div className="weather-condition__temp">19 c</div>
+        <div className="weather-condition__temp">
+          {this.props.current.minCelsius} c
+        </div>
         <div className="weather-condition__desc">
           <div>
             <img src={umberella} alt="umberella" />
-            <span className="citem">20%</span>
+            <span className="citem">{this.props.current.humidity} %</span>
           </div>
           <div>
-            <img src={wind} alt="wind" /> <span className="citem">3 km/h</span>
+            <img src={wind} alt="wind" />{" "}
+            <span className="citem">{this.props.current.windSpeed} km/h</span>
           </div>
           <div>
             <img src={compass} alt="compass" />{" "}
-            <span className="citem">NE</span>
+            <span className="citem">{this.props.current.windDirection}</span>
           </div>
         </div>
       </section>
