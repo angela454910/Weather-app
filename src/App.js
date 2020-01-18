@@ -22,7 +22,7 @@ class App extends React.Component {
 
   async componentDidMount() {
     try {
-      const response = await getWeather(this.state.cityName);
+      const response = await getWeather("Brisbane");
       this.updateWeather(response);
     } catch (error) {
       console.log(error);
@@ -51,12 +51,20 @@ class App extends React.Component {
   changeLimit = limit => {
     this.setState({ limit });
   };
+  toggleUnit = () => {
+    this.setState(state => ({
+      unit: state.unit === "C" ? "F" : "C"
+    }));
+  };
 
   render() {
     return (
       <div className="weather-channel__container">
         <Header />
         <Nav
+          unit={this.state.unit}
+          toggleUnit={this.toggleUnit}
+          search={this.search}
           searchValue={this.state.searchValue}
           handleSearchValueChange={this.handleSearchValueChange}
         />

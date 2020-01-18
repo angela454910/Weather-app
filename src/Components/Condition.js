@@ -3,32 +3,32 @@ import umberella from "../icon/icon-umberella.png";
 import wind from "../icon/icon-wind.png";
 import compass from "../icon/icon-compass.png";
 
-class Condition extends React.Component {
-  render() {
-    return (
-      <section className="weather-condition">
-        <div className="weather-condition__location">{this.props.cityName}</div>
-        <div className="weather-condition__clear">Clear</div>
-        <div className="weather-condition__temp">
-          {this.props.current.minCelsius} c
+function Condition(props) {
+  const { cityName, current, unit } = props;
+  const tempHigh = unit === "C" ? current.maxCelsius : current.maxFahrenheit;
+
+  return (
+    <section className="weather-condition">
+      <div className="weather-condition__location">{cityName}</div>
+      <div className="weather-condition__temp">
+        {tempHigh} {unit}
+      </div>
+      <div className="weather-condition__desc">
+        <div>
+          <img src={umberella} alt="umberella" />
+          <span className="citem">{current.humidity} %</span>
         </div>
-        <div className="weather-condition__desc">
-          <div>
-            <img src={umberella} alt="umberella" />
-            <span className="citem">{this.props.current.humidity} %</span>
-          </div>
-          <div>
-            <img src={wind} alt="wind" />{" "}
-            <span className="citem">{this.props.current.windSpeed} km/h</span>
-          </div>
-          <div>
-            <img src={compass} alt="compass" />{" "}
-            <span className="citem">{this.props.current.windDirection}</span>
-          </div>
+        <div>
+          <img src={wind} alt="wind" />{" "}
+          <span className="citem">{current.windSpeed} km/h</span>
         </div>
-      </section>
-    );
-  }
+        <div>
+          <img src={compass} alt="compass" />{" "}
+          <span className="citem">{current.windDirection}</span>
+        </div>
+      </div>
+    </section>
+  );
 }
 
 export default Condition;

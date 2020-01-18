@@ -4,7 +4,7 @@ import { format } from "date-fns";
 
 class Forecast extends React.Component {
   render() {
-    const { limit } = this.props;
+    const { limit, unit } = this.props;
     const forecasts = this.props.forecasts.slice(0, limit);
 
     return (
@@ -31,14 +31,19 @@ class Forecast extends React.Component {
           const date = new Date(forecast.time * 1000);
           const day = format(date, "EEE");
           const time = format(date, "HH:mm");
+          const high =
+            unit === "C" ? forecast.maxCelsius : forecast.maxFahrenheit;
+          const low =
+            unit === "C" ? forecast.minCelsius : forecast.minFahrenheit;
 
           return (
             <ForecastRow
+              unit={unit}
               key={forecast.time}
               day={day}
               time={time}
-              high={forecast.maxCelsius}
-              low={forecast.minCelsius}
+              high={high}
+              low={low}
             />
           );
         })}
