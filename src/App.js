@@ -3,21 +3,12 @@ import "./App.css";
 import Header from "./Components/Header";
 import Nav from "./Components/Nav";
 import Footer from "./Components/Footer";
-import { getWeather } from "./utlis/axios";
 import Main from "./Components/Main";
 import { connect } from "react-redux";
 import { loadWeather as loadWeatherAction } from "./redux/actions/weatherAction";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      searchValue: ""
-    };
-  }
-
   componentDidMount() {
     this.props.loadWeather("brisbane");
   }
