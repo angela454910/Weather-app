@@ -1,4 +1,6 @@
 import React from "react";
+import { connect } from "react-redux";
+import { toggleUnit } from "../redux/actions/navigationAction";
 
 function Nav(props) {
   const searchOnEnter = event => {
@@ -28,5 +30,12 @@ function Nav(props) {
     </nav>
   );
 }
+const mapStateToProps = state => ({
+  unit: state.navigation.unit
+});
 
-export default Nav;
+const mapDispatchToProps = dispatch => ({
+  toggleUnit: () => dispatch(toggleUnit())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Nav);

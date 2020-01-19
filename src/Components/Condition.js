@@ -2,6 +2,7 @@ import React from "react";
 import umberella from "../icon/icon-umberella.png";
 import wind from "../icon/icon-wind.png";
 import compass from "../icon/icon-compass.png";
+import { connect } from "react-redux";
 
 function Condition(props) {
   const { cityName, current, unit } = props;
@@ -31,4 +32,10 @@ function Condition(props) {
   );
 }
 
-export default Condition;
+const mapStateToProps = state => ({
+  unit: state.navigation.unit,
+  cityName: state.weather.cityName,
+  current: state.weather.current
+});
+
+export default connect(mapStateToProps)(Condition);

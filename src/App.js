@@ -5,38 +5,23 @@ import Nav from "./Components/Nav";
 import Footer from "./Components/Footer";
 import { getWeather } from "./utlis/axios";
 import Main from "./Components/Main";
+import { connect } from "react-redux";
+import { loadWeather as loadWeatherAction } from "./redux/actions/weatherAction";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 class App extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      cityName: "",
-      current: {},
-      forecasts: [],
       limit: 5,
-      searchValue: "",
-      unit: "C"
+      searchValue: ""
     };
   }
 
-  async componentDidMount() {
-    try {
-      const response = await getWeather("Brisbane");
-      this.updateWeather(response);
-    } catch (error) {
-      console.log(error);
-    }
+  componentDidMount() {
+    this.props.loadWeather("Brisbane");
   }
-
-  updateWeather = response => {
-    const data = response.data.data;
-    const cityName = data.city.name;
-    const current = data.current;
-    const forecasts = data.forecast.slice(0, 10);
-    this.setState({ cityName, current, forecasts });
-    console.log(forecasts);
-  };
 
   handleSearchValueChange = event => {
     const value = event.target.value;
@@ -51,35 +36,41 @@ class App extends React.Component {
   changeLimit = limit => {
     this.setState({ limit });
   };
-  toggleUnit = () => {
-    this.setState(state => ({
-      unit: state.unit === "C" ? "F" : "C"
-    }));
-  };
 
   render() {
     return (
       <div className="weather-channel__container">
         <Header />
+        {this.props.errorMessage && <p>{this.props.errorMessage}</p>}
         <Nav
-          unit={this.state.unit}
-          toggleUnit={this.toggleUnit}
           search={this.search}
           searchValue={this.state.searchValue}
           handleSearchValueChange={this.handleSearchValueChange}
         />
-        <Main
-          cityName={this.state.cityName}
-          current={this.state.current}
-          forecasts={this.state.forecasts}
-          limit={this.state.limit}
-          changeLimit={this.changeLimit}
-          unit={this.state.unit}
-        />
+        {this.props.isLoading ? (
+          <CircularProgress color="primary" size="10em" />
+        ) : (
+          <Main
+            cityName={this.state.cityName}
+            current={this.state.current}
+            forecasts={this.state.forecasts}
+            limit={this.state.limit}
+            changeLimit={this.changeLimit}
+          />
+        )}
         <Footer />
       </div>
     );
   }
 }
 
-export default App;
+const mapStateToProps = state => ({
+  isLoading: state.weather.isLoading,
+  errorMessage: state.weather.errorMessage
+});
+
+const mapDispatchToProps = dispatch => ({
+  loadWeather: city => dispatch(loadWeatherAction(city))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
