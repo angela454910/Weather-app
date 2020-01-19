@@ -3,6 +3,7 @@ import { getWeather } from "../../utlis/axios";
 export const FETCH_WEATHER = "FETCH_WEATH";
 export const FETCH_WEATHER_SUCCESS = "FETCH_WEATHER_SUCCESS";
 export const FETCH_WEATHER_FAILURE = "FETCH_WEATHER_FAILURE";
+export const LIMIT = "LIMIT";
 
 export const fetchWeatherSuccess = data => ({
   type: FETCH_WEATHER_SUCCESS,
@@ -16,6 +17,11 @@ export const fetchWeatherFailure = error => ({
 
 export const fetchWeather = () => ({
   type: FETCH_WEATHER
+});
+
+export const limit = limit => ({
+  type: LIMIT,
+  limit
 });
 
 export const loadWeather = city => dispatch => {

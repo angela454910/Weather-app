@@ -6,7 +6,7 @@ function Main(props) {
   return (
     <main>
       <Condition />
-      <Forecast limit={props.limit} changeLimit={props.changeLimit} />
+      <Forecast />
     </main>
   );
 }

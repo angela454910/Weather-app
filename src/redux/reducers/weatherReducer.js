@@ -1,7 +1,8 @@
 import {
   FETCH_WEATHER_SUCCESS,
   FETCH_WEATHER,
-  FETCH_WEATHER_FAILURE
+  FETCH_WEATHER_FAILURE,
+  LIMIT
 } from "../actions/weatherAction";
 
 const initialState = {
@@ -9,7 +10,8 @@ const initialState = {
   isLoading: false,
   cityName: "",
   current: {},
-  forecasts: []
+  forecasts: [],
+  limit: 5
 };
 
 const weatherReducer = (state = initialState, action) => {
@@ -36,6 +38,12 @@ const weatherReducer = (state = initialState, action) => {
         ...state,
         errorMessage: action.error,
         isLoading: false
+      };
+
+    case LIMIT:
+      return {
+        ...state,
+        limit: action.limit
       };
 
     default:

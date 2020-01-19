@@ -1,11 +1,16 @@
 import React from "react";
 import { connect } from "react-redux";
-import { toggleUnit } from "../redux/actions/navigationAction";
+import { toggleUnit, setSearch } from "../redux/actions/navigationAction";
+import { loadWeather } from "../redux/actions/weatherAction";
 
 function Nav(props) {
+  const search = () => {
+    props.loadWeather(props.input);
+  };
+
   const searchOnEnter = event => {
     const isEnterPressed = event.key === "Enter";
-    if (isEnterPressed) props.search();
+    if (isEnterPressed) search();
   };
 
   return (
@@ -13,11 +18,11 @@ function Nav(props) {
       <div>
         <input
           onKeyPress={searchOnEnter}
-          onChange={props.handleSearchValueChange}
-          value={props.searchValue} //controlled field from
+          onChange={event => props.setSearch(event.target.value)}
+          value={props.input} //controlled field from
           className="search-input"
         />
-        <button className="search-btn" onClick={props.search}>
+        <button className="search-btn" onClick={search}>
           <i className="fa fa-search"></i>
         </button>
 
@@ -31,11 +36,14 @@ function Nav(props) {
   );
 }
 const mapStateToProps = state => ({
-  unit: state.navigation.unit
+  unit: state.navigation.unit,
+  input: state.navigation.input
 });
 
 const mapDispatchToProps = dispatch => ({
-  toggleUnit: () => dispatch(toggleUnit())
+  toggleUnit: () => dispatch(toggleUnit()),
+  setSearch: input => dispatch(setSearch(input)),
+  loadWeather: city => dispatch(loadWeather(city))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Nav);

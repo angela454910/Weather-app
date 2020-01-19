@@ -14,49 +14,24 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      limit: 5,
       searchValue: ""
     };
   }
 
   componentDidMount() {
-    this.props.loadWeather("Brisbane");
+    this.props.loadWeather("brisbane");
   }
-
-  handleSearchValueChange = event => {
-    const value = event.target.value;
-    this.setState({ searchValue: value });
-  };
-
-  search = async () => {
-    const response = await getWeather(this.state.searchValue);
-    this.updateWeather(response);
-  };
-
-  changeLimit = limit => {
-    this.setState({ limit });
-  };
 
   render() {
     return (
       <div className="weather-channel__container">
         <Header />
         {this.props.errorMessage && <p>{this.props.errorMessage}</p>}
-        <Nav
-          search={this.search}
-          searchValue={this.state.searchValue}
-          handleSearchValueChange={this.handleSearchValueChange}
-        />
+        <Nav />
         {this.props.isLoading ? (
           <CircularProgress color="primary" size="10em" />
         ) : (
-          <Main
-            cityName={this.state.cityName}
-            current={this.state.current}
-            forecasts={this.state.forecasts}
-            limit={this.state.limit}
-            changeLimit={this.changeLimit}
-          />
+          <Main />
         )}
         <Footer />
       </div>

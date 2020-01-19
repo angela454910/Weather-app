@@ -3,6 +3,8 @@ import ForecastRow from "./ForecastRow";
 import { format } from "date-fns";
 import { connect } from "react-redux";
 
+import { limit as changeLimitAction } from "../redux/actions/weatherAction";
+
 function Forecast(props) {
   const { limit, unit } = props;
   const forecasts = props.forecasts.slice(0, limit);
@@ -50,7 +52,12 @@ function Forecast(props) {
 
 const mapStateToProps = state => ({
   unit: state.navigation.unit,
-  forecasts: state.weather.forecasts
+  forecasts: state.weather.forecasts,
+  limit: state.weather.limit
 });
 
-export default connect(mapStateToProps)(Forecast);
+const mapDispatchToProps = dispatch => ({
+  changeLimit: limit => dispatch(changeLimitAction(limit))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Forecast);
